@@ -399,7 +399,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter',Arial,sans-ser
 @media(prefers-reduced-motion:reduce){.coverage-map *{scroll-behavior:auto}.core-ring{animation:none}.map-pin{transition:none}}
 
 /* ==========================================================================
-   THEME (applied LAST — black/white + minimal orange, Instrument Serif)
+   THEME (applied LAST — black/white + minimal orange, Inter Tight)
    ========================================================================== */
 :root{
   --ink:#111;
@@ -409,7 +409,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Inter',Arial,sans-ser
   --line-2:#dcdcd7;
   --muted:#77776f;
   --accent:#ff5b14;
-  --serif:"Instrument Serif",Georgia,serif;
+  --serif:"Inter Tight",Arial,sans-serif;
   --sans:"Inter","Helvetica Neue",Arial,sans-serif;
   /* remap the old variables so untouched rules inherit the new palette */
   --bg:#ecece9;--bg-2:#e4e4e0;--card:#fff;--card-2:#f6f6f3;--gold:#111;--gold-2:#111;
