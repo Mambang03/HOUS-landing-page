@@ -1018,14 +1018,16 @@ fbq('track', 'PageView');
 </script>
 <!-- HOUS playful mascot -->
 <img id="housMascot" src="https://arleta.site/interactivelink/6512/Minimalist-Scissor-Wielding-Cat-Mascot.png" alt="HOUS mascot — click to play" title="Click me!" role="button" tabindex="0" draggable="false">
-<div id="housMascotTip" aria-live="polite">HEY! BOOK YOUR CUT.</div>
+<div id="housMascotTip" aria-live="polite">TAP TO PLAY WITH ME!</div>
 <script>
 (function () {
   var mascot = document.getElementById('housMascot');
   var tip = document.getElementById('housMascotTip');
   if (!mascot || !tip) return;
   var corners = ['br','bl','tr','tl','br','mr','ml'];
+  var messages = ['HEY! BOOK YOUR CUT.','BOOP! NICE TO SEE YOU.','LET’S GET YOU LOOKING FRESH!','CATCH ME IF YOU CAN!','ONE TAP, ONE HAPPY CAT!','READY FOR A FRESH CUT?'];
   var moveIndex = 0;
+  var messageIndex = 0;
   var tipTimer;
   function moveMascot() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1039,23 +1041,27 @@ fbq('track', 'PageView');
     else { mascot.style.left = '18px'; mascot.style.top = '48%'; }
   }
   function play() {
-    mascot.classList.remove('hous-playing'); void mascot.offsetWidth; mascot.classList.add('hous-playing');
-    tip.classList.add('show'); clearTimeout(tipTimer);
-    tipTimer = setTimeout(function () { tip.classList.remove('show'); }, 2200);
+    tip.textContent = messages[messageIndex++ % messages.length];
+    mascot.classList.remove('hous-playing');
+    void mascot.offsetWidth;
+    mascot.classList.add('hous-playing');
+    tip.classList.add('show');
+    clearTimeout(tipTimer);
+    tipTimer = setTimeout(function () { tip.classList.remove('show'); }, 2400);
     if (navigator.vibrate) navigator.vibrate(25);
-    setTimeout(moveMascot, 250);
+    setTimeout(moveMascot, 300);
   }
   mascot.addEventListener('click', play);
-  mascot.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } });
-  window.addEventListener('resize', function () {
-    if (window.innerWidth <= 600) { mascot.style.width = '96px'; }
+  mascot.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
   });
-  // Wander to another edge occasionally, without blocking the booking flow for long.
+  window.addEventListener('resize', function () {
+    if (window.innerWidth <= 600) mascot.style.width = '96px';
+  });
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setTimeout(function () { moveMascot(); setInterval(moveMascot, 8500); }, 4500);
   }
-})();
-</script>
+})();</script>
 <script>
 (function () {
   var toggle = document.getElementById('menuToggle');
