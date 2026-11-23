@@ -1292,11 +1292,6 @@ fbq('track', 'PageView');
           <div class="booking-right-card">
             <h3 class="summary-heading">Booking Summary</h3>
 
-            <div class="promo-callout">
-              <span>🔥</span>
-              <span>Use code <strong>HOUS10</strong> for RM10 off your first visit!</span>
-            </div>
-
             <div class="sum-rows">
               <div>
                 <div class="sum-row">
@@ -1332,11 +1327,6 @@ fbq('track', 'PageView');
                 <span>Promo (HOUS10):</span>
                 <strong>- RM 10</strong>
               </div>
-            </div>
-
-            <div class="promo-input-row">
-              <input type="text" id="promoInput" placeholder="Promo Code (HOUS10)" maxlength="20">
-              <button type="button" class="promo-apply-btn" id="applyPromoBtn">Apply</button>
             </div>
 
             <div class="sum-divider"></div>
@@ -1644,21 +1634,8 @@ fbq('track', 'PageView');
     });
   });
 
-  /* ============ PROMO CODE ============ */
-  $('applyPromoBtn').addEventListener('click', function () {
-    var code = $('promoInput').value.trim().toUpperCase();
-    if (code === 'HOUS10') {
-      discountAmount = 10;
-      $('applyPromoBtn').textContent = 'Applied ✓';
-      $('applyPromoBtn').style.background = 'var(--green)';
-      $('applyPromoBtn').style.borderColor = 'var(--green)';
-      $('applyPromoBtn').style.color = '#fff';
-      updateSelectedBox();
-    } else {
-      $('promoInput').style.borderColor = 'var(--red)';
-      setTimeout(function () { $('promoInput').style.borderColor = ''; }, 1400);
-    }
-  });
+  /* Promo code feature is temporarily disabled pending testing. */
+  var discountAmount = 0;
 
   /* ============ SLOT MASA (BUTTON GRID) ============ */
   var taken = {}, slotWatch = null;
