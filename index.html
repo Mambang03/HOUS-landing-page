@@ -25,7 +25,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', '1349391520466235');
 fbq('track', 'PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1349391520466235&ev=PageView&noscript=1"></noscript>
+<noscript><img height="1" width="1" class="pixel-tracker" src="https://www.facebook.com/tr?id=1349391520466235&ev=PageView&noscript=1"></noscript>
 <!-- End Meta Pixel Code -->
 
 
@@ -587,7 +587,7 @@ fbq('track', 'PageView');
     var ul = $('selectedList');
     if (!ul) return;
     if (!selected.length) {
-      ul.innerHTML = '<li><span style="color:var(--muted)">No services selected yet.</span></li>';
+      ul.innerHTML = '<li><span class="service-empty-note">No services selected yet.</span></li>';
       $('selectedTotal').textContent = 'RM 0';
       $('priceLine').textContent = '—';
       return;
