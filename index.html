@@ -383,7 +383,8 @@ fbq('track', 'PageView');
     { cat: 'TREATMENTS / CHEMICAL',name: 'Design Perm',                 price: 150, duration: 60, desc: 'Perm styled to your preferred design.' },
     { cat: 'TREATMENTS / CHEMICAL',name: 'Keratin Treatment',           price: 160, duration: 60, desc: 'Keratin treatment for smoother hair.' },
     { cat: 'TREATMENTS / CHEMICAL',name: 'Smooth & Shape',              price: 200, duration: 60, desc: 'Hair-smoothing and shaping treatment.' },
-    { cat: 'TREATMENTS / CHEMICAL',name: 'Deep Conditioning / Hair Mask', price: 60, duration: 30, desc: 'Deep conditioning and hair mask treatment.' }
+    { cat: 'TREATMENTS / CHEMICAL',name: 'Deep Conditioning / Hair Mask', price: 60, duration: 30, desc: 'Deep conditioning and hair mask treatment.' },
+    { cat: 'HOUS SIGNATURE', name: 'House Calling (2 Hours)', price: 150, duration: 120, desc: 'Our signature private grooming experience, brought directly to your home. Enjoy up to two hours of personalised service in your own space.' }
   ];
 
   function priceText(s) { return 'RM ' + s.price; }
@@ -449,10 +450,12 @@ fbq('track', 'PageView');
     card.setAttribute('aria-pressed', 'false');
     card.setAttribute('data-idx', String(i));
     card.innerHTML =
+      (s.cat === 'HOUS SIGNATURE' ? '<span class="svc-signature-badge">OUR SIGNATURE SERVICE</span>' : '') +
       '<div class="svc-top"><span class="svc-name">' + s.name + '</span><span class="svc-price">' + priceText(s) + '</span></div>' +
       '<p class="svc-desc">' + s.desc + '</p>' +
       '<p class="svc-meta">⏱ ' + durText(s) + '</p>' +
       '<span class="svc-cta">SELECT SERVICE →</span>';
+    if (s.cat === 'HOUS SIGNATURE') card.classList.add('svc-card-signature');
     function toggle() { toggleSelect(i, card); }
     card.addEventListener('click', toggle);
     card.addEventListener('keydown', function (e) {
