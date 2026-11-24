@@ -2856,11 +2856,37 @@ footer{background:var(--paper);border-top:1px solid var(--line)}
   letter-spacing: -0.065em;
   white-space: nowrap;
 }
-.hero h1 .hero-your {
-  color: #77736c;
+
+/* Prevent the old orange-gradient span styling from affecting YOUR HOUS. */
+.hero h1 .hero-brand-line {
+  display: inline;
+  position: static;
+  color: inherit;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: currentColor;
+  text-shadow: none;
+  letter-spacing: inherit;
+  transform: none;
 }
-.hero h1 .hero-hous {
-  color: var(--gold);
+.hero h1 .hero-brand-line::after {
+  content: none;
+  display: none;
+}
+.hero h1 .hero-brand-line .hero-your {
+  color: #77736c;
+  background: none;
+  -webkit-text-fill-color: #77736c;
+  text-shadow: none;
+  transform: none;
+}
+.hero h1 .hero-brand-line .hero-hous {
+  color: #ff641f;
+  background: none;
+  -webkit-text-fill-color: #ff641f;
+  text-shadow: none;
+  transform: none;
 }
 @media (max-width: 768px) {
   .hero h1 {
