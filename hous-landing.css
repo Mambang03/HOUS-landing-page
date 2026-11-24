@@ -2899,3 +2899,13 @@ footer{background:var(--paper);border-top:1px solid var(--line)}
     font-size: clamp(2.05rem, 9.2vw, 2.45rem);
   }
 }
+
+
+/* Utility styles moved out of index.html */
+.pixel-tracker {
+  display: none !important;
+}
+
+.service-empty-note {
+  color: var(--muted);
+}
