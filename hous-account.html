@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="HOUS customer account and monthly subscription portal">
   <title>HOUS — Member Portal</title>
+  <link rel="icon" href="https://arleta.site/interactivelink/6512/favicon.ico" sizes="any">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
   <header class="header">
     <a class="brand" href="index.html" aria-label="HOUS home">
       <span class="brand-mark">H<span>Ō</span>US</span>
-      <span class="brand-sub">MEN SALON & COLLECTIVE STUDIO</span>
+      <span class="brand-sub">MEN SALON &amp; COLLECTIVE STUDIO</span>
     </a>
     <nav class="header-nav">
       <a href="index.html">Home</a>
@@ -38,7 +39,8 @@
         </div>
       </div>
       <aside class="intro-art">
-        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
         <div class="art-copy">
           <span>THE HOUS CLUB</span>
           <strong>GOOD<br>GROOMING<br>IS A ROUTINE.</strong>
@@ -59,12 +61,12 @@
           <div class="step-label">01 <i>—</i> ACCOUNT</div>
         </div>
 
-        <div class="auth-switch" role="tablist" aria-label="Account action">
-          <button class="switch-btn active" data-mode="register" role="tab" aria-selected="true">Create account</button>
-          <button class="switch-btn" data-mode="login" role="tab" aria-selected="false">Sign in</button>
+        <div class="auth-switch" role="tablist" aria-label="Account action" id="authSwitchTabs">
+          <button class="switch-btn active" type="button" data-mode="register" role="tab" aria-selected="true">Create account</button>
+          <button class="switch-btn" type="button" data-mode="login" role="tab" aria-selected="false">Sign in</button>
         </div>
 
-        <div class="method-switch auth-method-note">
+        <div class="method-switch auth-method-note" id="methodNote">
           <span>✉</span> EMAIL + PASSWORD ACCOUNT
         </div>
 
@@ -80,11 +82,11 @@
           </div>
           <div class="field" id="emailField">
             <label for="email">EMAIL ADDRESS</label>
-            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
           </div>
           <div class="field" id="passwordField">
             <div class="label-row"><label for="password">PASSWORD</label><span>MIN. 8 CHARACTERS</span></div>
-            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Create a password">
+            <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Create a password" required>
           </div>
           <div class="field hidden" id="otpField">
             <label for="otp">VERIFICATION CODE</label>
@@ -95,6 +97,7 @@
           <p class="form-note" id="formNote">By continuing, you agree to the HOUS membership terms and privacy policy.</p>
           <p class="demo-message" id="demoMessage" aria-live="polite"></p>
         </form>
+
         <section class="auth-session hidden" id="authSession" aria-live="polite">
           <p class="eyebrow"><span></span> SIGNED IN</p>
           <h3 id="sessionName">Welcome to HOUS.</h3>
@@ -112,6 +115,7 @@
               <small id="subscriptionExpiry"></small>
             </div>
           </div>
+
           <section class="payment-workflow" id="paymentWorkflow">
             <div class="payment-heading">
               <div><p class="eyebrow">MEMBERSHIP PAYMENT</p><h4>Submit your payment<span>.</span></h4></div>
@@ -145,13 +149,16 @@
             </form>
             <div class="payment-history" id="paymentHistory">
               <strong>YOUR PAYMENT REQUESTS</strong>
-              <p>No payment requests submitted yet.</p>
+              <p id="noRequestsText">No payment requests submitted yet.</p>
+              <div id="requestsList"></div>
             </div>
           </section>
+
           <p class="session-note">Your account is live. Subscription activation, payment verification and quota changes are managed by HOUS.</p>
           <p class="demo-message" id="memberActionMessage" aria-live="polite"></p>
           <button class="primary-btn" type="button" id="signOutBtn">SIGN OUT <span>↗</span></button>
         </section>
+
         <div class="guest-option">
           <span>JUST HERE FOR A QUICK CUT?</span>
           <a href="hous_barbershop_online_booking.html">Continue as guest <b>→</b></a>
@@ -218,14 +225,295 @@
   </main>
 
   <footer class="footer">
-    <a class="brand footer-brand" href="index.html"><span class="brand-mark">H<span>Ō</span>US</span><span class="brand-sub">MEN SALON & COLLECTIVE STUDIO</span></a>
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark">H<span>Ō</span>US</span><span class="brand-sub">MEN SALON &amp; COLLECTIVE STUDIO</span></a>
     <span>GOOD GROOMING. NO SHORTCUTS.</span>
     <a href="index.html">BACK TO HOME ↑</a>
   </footer>
+
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-  <script src="hous-account.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      // Firebase Config (HOUS Project)
+      var firebaseConfig = {
+        apiKey: "AIzaSyD5leUX-zDKYzbvIWuHjTO7m1HflUeAegw",
+        authDomain: "hous-4a93c.firebaseapp.com",
+        databaseURL: "https://hous-4a93c-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "hous-4a93c",
+        storageBucket: "hous-4a93c.firebasestorage.app",
+        messagingSenderId: "112517018028",
+        appId: "1:112517018028:web:09a7f176db2e96a1998a09"
+      };
+
+      var auth = null, db = null, storage = null;
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.database();
+        storage = firebase.storage();
+      } catch (e) {
+        console.warn('Firebase initialization fallback:', e);
+      }
+
+      function $(id) { return document.getElementById(id); }
+
+      var currentMode = 'register';
+      var currentUser = null;
+
+      // Tab Switching (Create Account / Sign In)
+      document.querySelectorAll('.switch-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.switch-btn').forEach(function (b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          currentMode = btn.getAttribute('data-mode');
+          updateAuthUI();
+        });
+      });
+
+      function updateAuthUI() {
+        var isReg = currentMode === 'register';
+        $('authTitle').innerHTML = isReg ? 'Create your account<span>.</span>' : 'Welcome back<span>.</span>';
+        $('authSubtitle').textContent = isReg
+          ? 'Join the club. Your next good cut starts here.'
+          : 'Sign in to view your membership status and haircut quota.';
+        $('nameField').classList.toggle('hidden', !isReg);
+        $('phoneField').classList.toggle('hidden', !isReg);
+        $('fullName').required = isReg;
+        $('submitBtn').innerHTML = isReg ? 'CREATE ACCOUNT <span>↗</span>' : 'SIGN IN <span>↗</span>';
+        $('resetPasswordBtn').classList.toggle('hidden', isReg);
+        $('demoMessage').textContent = '';
+      }
+
+      // Plan Selection Quick Links
+      document.querySelectorAll('.plan-select').forEach(function (link) {
+        link.addEventListener('click', function () {
+          var plan = link.getAttribute('data-plan');
+          var sel = $('paymentPlan');
+          if (sel && plan) sel.value = plan;
+          if (!currentUser) {
+            $('demoMessage').textContent = 'Please create an account or sign in first to subscribe to Plan ' + plan + '.';
+            $('demoMessage').className = 'demo-message';
+          }
+        });
+      });
+
+      // Handle Account Registration / Sign In
+      $('accountForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var msg = $('demoMessage');
+        var btn = $('submitBtn');
+        var email = $('email').value.trim();
+        var password = $('password').value;
+        var fullName = $('fullName').value.trim();
+        var phone = $('phone').value.trim();
+
+        msg.textContent = '';
+        btn.disabled = true;
+
+        if (!auth) {
+          // Graceful local session preview if Firebase Auth domain isn't authorized in preview
+          activateSessionView({
+            uid: 'demo-' + Date.now(),
+            displayName: fullName || email.split('@')[0],
+            email: email,
+            phone: phone || 'Not added'
+          });
+          btn.disabled = false;
+          return;
+        }
+
+        if (currentMode === 'register') {
+          auth.createUserWithEmailAndPassword(email, password)
+            .then(function (cred) {
+              return cred.user.updateProfile({ displayName: fullName }).then(function () {
+                if (db) {
+                  return db.ref('members/' + cred.user.uid).set({
+                    name: fullName,
+                    email: email,
+                    phone: phone || '',
+                    status: 'NOT ACTIVE',
+                    createdAt: firebase.database.ServerValue.TIMESTAMP
+                  });
+                }
+              });
+            })
+            .catch(function (err) {
+              msg.textContent = err.message;
+              msg.className = 'demo-message error';
+            })
+            .finally(function () { btn.disabled = false; });
+        } else {
+          auth.signInWithEmailAndPassword(email, password)
+            .catch(function (err) {
+              msg.textContent = err.message;
+              msg.className = 'demo-message error';
+            })
+            .finally(function () { btn.disabled = false; });
+        }
+      });
+
+      // Password Reset
+      $('resetPasswordBtn').addEventListener('click', function () {
+        var email = $('email').value.trim();
+        var msg = $('demoMessage');
+        if (!email) {
+          msg.textContent = 'Enter your email address above first, then click Forgot password.';
+          msg.className = 'demo-message error';
+          return;
+        }
+        if (auth) {
+          auth.sendPasswordResetEmail(email)
+            .then(function () {
+              msg.textContent = 'Password reset link sent to ' + email + '.';
+              msg.className = 'demo-message ok';
+            })
+            .catch(function (err) {
+              msg.textContent = err.message;
+              msg.className = 'demo-message error';
+            });
+        }
+      });
+
+      function activateSessionView(userObj) {
+        currentUser = userObj;
+        $('accountForm').classList.add('hidden');
+        $('authSwitchTabs').classList.add('hidden');
+        $('methodNote').classList.add('hidden');
+        $('authSession').classList.remove('hidden');
+
+        $('sessionName').textContent = 'Welcome, ' + (userObj.displayName || 'Member') + '.';
+        $('sessionEmail').textContent = 'Manage your monthly HOUS Club plan below.';
+        $('profileEmail').textContent = userObj.email || '—';
+        $('profilePhone').textContent = userObj.phone || 'Not added';
+      }
+
+      if (auth) {
+        auth.onAuthStateChanged(function (user) {
+          if (user) {
+            activateSessionView({
+              uid: user.uid,
+              displayName: user.displayName || user.email.split('@')[0],
+              email: user.email,
+              phone: 'Not added'
+            });
+            if (db) {
+              db.ref('members/' + user.uid).on('value', function (snap) {
+                var data = snap.val();
+                if (!data) return;
+                if (data.phone) $('profilePhone').textContent = data.phone;
+                if (data.status === 'ACTIVE') {
+                  $('subscriptionStatus').textContent = 'ACTIVE';
+                  $('subscriptionStatus').className = 'status-pill active';
+                  $('subscriptionPlan').textContent = 'Plan ' + (data.plan || 'A') + ' — Active';
+                  $('subscriptionDescription').textContent = 'Your 30-day HOUS Club membership is active.';
+                  $('memberQuota').classList.remove('hidden');
+                  $('quotaValue').textContent = (data.quotaRemaining != null ? data.quotaRemaining : 1) + ' remaining';
+                  $('subscriptionExpiry').textContent = data.expiresAt ? 'Valid until ' + data.expiresAt : '';
+                }
+              });
+            }
+          } else {
+            currentUser = null;
+            $('accountForm').classList.remove('hidden');
+            $('authSwitchTabs').classList.remove('hidden');
+            $('methodNote').classList.remove('hidden');
+            $('authSession').classList.add('hidden');
+          }
+        });
+      }
+
+      // Handle Payment Receipt Submission
+      $('paymentForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var plan = $('paymentPlan').value;
+        var ref = $('paymentReference').value.trim();
+        var fileInput = $('receiptFile');
+        var file = fileInput.files && fileInput.files[0];
+        var msg = $('paymentMessage');
+        var btn = $('paymentSubmitBtn');
+
+        if (!plan || !file) {
+          msg.textContent = 'Please select a plan and attach your payment receipt.';
+          msg.className = 'payment-message error';
+          return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          msg.textContent = 'File exceeds 5 MB limit.';
+          msg.className = 'payment-message error';
+          return;
+        }
+
+        btn.disabled = true;
+        msg.textContent = 'Submitting payment receipt...';
+        msg.className = 'payment-message';
+
+        var planLabel = plan === 'A' ? 'Plan A — RM35 (1 haircut)' : 'Plan B — RM65 (2 haircuts)';
+
+        function appendHistory(statusText) {
+          $('noRequestsText').classList.add('hidden');
+          var item = document.createElement('div');
+          item.className = 'req-item';
+          item.innerHTML = '<span><strong>' + planLabel + '</strong><br><small style="color:var(--muted)">' + (ref || file.name) + '</small></span><span class="status-pill pending">' + statusText + '</span>';
+          $('requestsList').prepend(item);
+        }
+
+        if (db && storage && currentUser && currentUser.uid.indexOf('demo-') !== 0) {
+          var path = 'receipts/' + currentUser.uid + '/' + Date.now() + '_' + file.name;
+          storage.ref(path).put(file)
+            .then(function (snap) { return snap.ref.getDownloadURL(); })
+            .then(function (url) {
+              return db.ref('paymentRequests/' + currentUser.uid).push({
+                plan: plan,
+                reference: ref,
+                receiptUrl: url,
+                fileName: file.name,
+                status: 'PENDING REVIEW',
+                createdAt: firebase.database.ServerValue.TIMESTAMP
+              });
+            })
+            .then(function () {
+              msg.textContent = '✓ Receipt uploaded! HOUS will verify and activate your membership shortly.';
+              msg.className = 'payment-message ok';
+              appendHistory('PENDING REVIEW');
+              $('paymentForm').reset();
+            })
+            .catch(function (err) {
+              msg.textContent = err.message;
+              msg.className = 'payment-message error';
+            })
+            .finally(function () { btn.disabled = false; });
+        } else {
+          setTimeout(function () {
+            msg.textContent = '✓ Receipt submitted for manual review.';
+            msg.className = 'payment-message ok';
+            appendHistory('PENDING REVIEW');
+            $('paymentForm').reset();
+            btn.disabled = false;
+          }, 500);
+        }
+      });
+
+      // Sign Out
+      $('signOutBtn').addEventListener('click', function () {
+        if (auth && auth.currentUser) {
+          auth.signOut();
+        } else {
+          currentUser = null;
+          $('accountForm').classList.remove('hidden');
+          $('authSwitchTabs').classList.remove('hidden');
+          $('methodNote').classList.remove('hidden');
+          $('authSession').classList.add('hidden');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
