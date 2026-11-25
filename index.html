@@ -93,48 +93,53 @@ fbq('track', 'PageView');
     </div>
   </section>
 
-<section class="hous-coverage" id="journal" aria-labelledby="coverage-title">
-  <div class="coverage-map" aria-hidden="true">
-    <svg class="coverage-streets" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMid slice">
-      <g class="street-minor">
-        <path d="M-40 90 L210 180 390 90 570 190 760 70 980 160 1190 60 1450 150"/>
-        <path d="M-30 210 L180 290 360 220 560 330 760 220 960 330 1180 230 1450 310"/>
-        <path d="M-50 390 L170 330 360 440 570 360 760 470 960 390 1180 500 1450 410"/>
-        <path d="M60 -30 L130 160 70 330 190 650 M300 -30 L260 150 370 310 320 650 M520 -30 L600 170 520 340 650 650 M790 -30 L730 150 850 330 790 650 M1030 -30 L970 180 1100 340 1040 650 M1270 -30 L1190 160 1300 350 1240 650"/>
-        <path d="M-20 500 Q180 410 330 530 T680 520 T1030 530 T1440 500"/>
-        <path d="M-20 20 Q180 120 330 10 T680 30 T1030 10 T1440 30"/>
-      </g>
-      <g class="street-major">
-        <path d="M-30 300 C220 180 350 250 540 310 S900 420 1450 180"/>
-        <path d="M180 -30 C360 130 430 250 620 650"/>
-        <path d="M900 -30 C820 150 900 300 1120 650"/>
-        <path d="M-30 560 C280 430 480 440 720 520 S1120 600 1450 460"/>
-      </g>
-    </svg>
-    <div class="coverage-vignette"></div>
-    <div class="coverage-radius"></div>
-    <div class="coverage-core"><span class="core-ring"></span><span class="core-label">THE HEART<br>OF KL</span></div>
-    <span class="map-cross cross-one">+</span><span class="map-cross cross-two">+</span><span class="map-cross cross-three">+</span>
-
-<span class="map-pin pin-damansara"><i></i><b>DAMANSARA</b></span>
-    <span class="map-pin pin-mont"><i></i><b>MONT KIARA</b></span>
-    <span class="map-pin pin-ttdi"><i></i><b>TTDI</b></span>
-    <span class="map-pin pin-bangsar"><i></i><b>BANGSAR</b></span>
-    <span class="map-pin pin-klcc"><i></i><b>KLCC</b></span>
-    <span class="map-pin pin-trx"><i></i><b>TRX</b></span>
-  </div>
-  <div class="coverage-frame" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-  <div class="container coverage-content">
-    <div class="coverage-copy">
-      <p class="kicker">HOUS COVERAGE / KUALA LUMPUR</p>
-      <h2 id="coverage-title">THE HEART<br>OF KL.</h2>
-      <p>From Damansara to the city centre, HOUS brings considered grooming to your space across Kuala Lumpur.</p>
-      <a class="btn coverage-map-link" href="https://maps.app.goo.gl/fxVTw86YXC4FLXAP6" target="_blank" rel="noopener">Open Google Maps <span aria-hidden="true">↗</span></a>
+<section class="hous-coverage hous-coverage-3d" id="journal" aria-labelledby="coverage-title">
+  <div class="container coverage-3d-container">
+    <div class="coverage-heading">
+      <p class="kicker">HOUS COVERAGE / KUALA LUMPUR & SELANGOR</p>
+      <h2 id="coverage-title">CLOSER TO<br>YOUR EVERYDAY.</h2>
+      <p>Private grooming, delivered across Kuala Lumpur and selected areas of Selangor.</p>
     </div>
-    <div class="coverage-info">
-      <span class="coverage-brand-mark" aria-hidden="true">HŌ<br>US</span>
-      <div><span class="coverage-info-eyebrow">HOUS COVERAGE</span><strong>THE HEART OF KL</strong><p>DAMANSARA · MONT KIARA · TTDI · BANGSAR · KLCC · TRX</p></div>
-      <span class="coverage-info-arrow" aria-hidden="true">↗</span>
+
+    <div class="coverage-stage" id="housCoverageStage" role="img" aria-label="Illustrated 3D map showing HOUS coverage in Kuala Lumpur, Wangsa Kiara, Damansara, Sungai Buloh and Puncak Alam">
+      <img class="coverage-terrain" src="asset/hous-3d-coverage-map.webp" alt="" loading="lazy" decoding="async">
+
+      <div class="coverage-cloud cloud-one" aria-hidden="true"></div>
+      <div class="coverage-cloud cloud-two" aria-hidden="true"></div>
+      <div class="coverage-cloud cloud-three" aria-hidden="true"></div>
+
+      <svg class="coverage-leaders" viewBox="0 0 1000 666" preserveAspectRatio="none" aria-hidden="true">
+        <path class="coverage-leader leader-puncak" d="M285 225 L220 155 L75 155"/>
+        <path class="coverage-leader leader-sungai" d="M435 315 L510 185 L650 185"/>
+        <path class="coverage-leader leader-damansara" d="M435 440 L275 420 L85 420"/>
+        <path class="coverage-leader leader-wangsa" d="M520 530 L540 590 L675 590"/>
+        <path class="coverage-leader leader-kl" d="M775 325 L850 235 L930 235"/>
+        <circle class="coverage-leader-dot" cx="285" cy="225" r="4"/>
+        <circle class="coverage-leader-dot" cx="435" cy="315" r="4"/>
+        <circle class="coverage-leader-dot" cx="435" cy="440" r="4"/>
+        <circle class="coverage-leader-dot" cx="520" cy="530" r="4"/>
+        <circle class="coverage-leader-dot" cx="775" cy="325" r="4"/>
+      </svg>
+
+      <span class="coverage-marker marker-puncak" aria-hidden="true"><i></i></span>
+      <span class="coverage-marker marker-sungai" aria-hidden="true"><i></i></span>
+      <span class="coverage-marker marker-damansara" aria-hidden="true"><i></i></span>
+      <span class="coverage-marker marker-wangsa" aria-hidden="true"><i></i></span>
+      <span class="coverage-marker marker-kl" aria-hidden="true"><i></i></span>
+
+      <span class="coverage-callout callout-puncak"><i></i>PUNCAK ALAM</span>
+      <span class="coverage-callout callout-sungai"><i></i>SUNGAI BULOH</span>
+      <span class="coverage-callout callout-damansara"><i></i>DAMANSARA</span>
+      <span class="coverage-callout callout-wangsa"><i></i>WANGSA KIARA</span>
+      <span class="coverage-callout callout-kl"><i></i>KUALA LUMPUR</span>
+    </div>
+
+    <div class="coverage-bottom">
+      <div class="coverage-areas">
+        <span class="coverage-areas-label">CURRENT SERVICE AREAS</span>
+        <span>Kuala Lumpur</span><span>Wangsa Kiara</span><span>Damansara</span><span>Sungai Buloh</span><span>Puncak Alam</span>
+      </div>
+      <a class="btn coverage-map-link" href="https://maps.app.goo.gl/fxVTw86YXC4FLXAP6" target="_blank" rel="noopener">OPEN GOOGLE MAPS <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
@@ -1165,5 +1170,27 @@ fbq('track', 'PageView');
   });
 })();
 </script>
+
+<!-- ===== HOUS 3D COVERAGE SCROLL REVEAL ===== -->
+<script>
+(function () {
+  var section = document.querySelector('.hous-coverage-3d');
+  if (!section) return;
+  if (!('IntersectionObserver' in window)) {
+    section.classList.add('is-inview');
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        section.classList.add('is-inview');
+        observer.unobserve(section);
+      }
+    });
+  }, { threshold: 0.16 });
+  observer.observe(section);
+})();
+</script>
+
 </body>
 </html>
