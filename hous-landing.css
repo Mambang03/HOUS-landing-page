@@ -607,7 +607,7 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
 .callout-puncak{left:5.8%;top:16.2%}
 .callout-sungai{left:64.5%;top:20.3%}
 .callout-damansara{left:5.8%;top:59.2%}
-.callout-mount{left:65.5%;top:86.2%}
+.callout-mount{left:66%;top:31%}
 .callout-kl{left:83%;top:26%}
 .coverage-cloud{
   position:absolute;z-index:2;display:block;width:clamp(170px,25%,310px);height:auto;
@@ -652,7 +652,7 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
   .callout-puncak{left:0;top:14%}
   .callout-sungai{left:62%;top:17%}
   .callout-damansara{left:0;top:58%}
-  .callout-mount{left:59%;top:87%}
+  .callout-mount{left:59%;top:31%}
   .callout-kl{left:80%;top:27%}
   .coverage-marker{width:12px;height:12px}
   .coverage-marker i{width:7px;height:7px;box-shadow:0 0 0 3px rgba(232,187,117,.2),0 0 13px rgba(255,211,146,.95)}
