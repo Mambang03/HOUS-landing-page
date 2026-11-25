@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 820">
+<defs>
+ <linearGradient id="grass" x2=".2" y2="1"><stop stop-color="#a8c76b"/><stop offset=".42" stop-color="#568b3c"/><stop offset="1" stop-color="#254d2c"/></linearGradient>
+ <linearGradient id="cliff" x2="0" y2="1"><stop stop-color="#9a875e"/><stop offset=".35" stop-color="#655039"/><stop offset="1" stop-color="#2e281f"/></linearGradient>
+ <linearGradient id="road" x2="0" y2="1"><stop stop-color="#bfc2b8"/><stop offset=".2" stop-color="#4b514c"/><stop offset="1" stop-color="#242b28"/></linearGradient>
+ <linearGradient id="building" x2="1" y2="1"><stop stop-color="#e6e6d9"/><stop offset=".5" stop-color="#8d9c9b"/><stop offset="1" stop-color="#354b4a"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="2"/></filter>
+ <g id="tree"><circle r="18" fill="#234b2c"/><circle cx="-7" cy="-7" r="12" fill="#5b8b40"/><circle cx="8" cy="-9" r="11" fill="#80a84c"/><circle cx="4" cy="5" r="12" fill="#3d7137"/><circle cx="-5" cy="6" r="7" fill="#9ab85c"/></g>
+ <g id="house"><path d="M0 12 25 0 52 12 27 25Z" fill="#d7c8a7"/><path d="M0 12 27 25 27 47 0 34Z" fill="#a7aaa0"/><path d="M27 25 52 12 52 34 27 47Z" fill="#6d7a72"/><path d="m0 12 25-13 27 13-25 13Z" fill="#a34e39"/></g>
+ <g id="tower"><path d="M0 0 8 0 12 135 -4 135Z" fill="#e8e5d9"/><path d="M-4 40 12 40" stroke="#b7c2bf" stroke-width="4"/><path d="M-3 80 11 80" stroke="#b7c2bf" stroke-width="4"/><path d="M-2 0 10 0" stroke="#fff" stroke-width="5"/></g>
+</defs>
+<ellipse cx="805" cy="676" rx="700" ry="105" fill="#000" opacity=".42" filter="url(#shadow)"/>
+<path d="M72 430 188 300 340 276 435 190 620 204 748 112 920 160 1070 92 1260 140 1460 255 1515 410 1440 535 1310 590 1190 696 1000 675 850 754 660 700 480 770 300 690 155 620 75 530Z" fill="url(#cliff)" stroke="#4a392a" stroke-width="10"/>
+<path d="M72 402 188 270 340 248 435 160 620 176 748 84 920 132 1070 64 1260 112 1460 226 1515 382 1440 505 1310 560 1190 666 1000 645 850 724 660 670 480 740 300 660 155 590 75 500Z" fill="url(#grass)" stroke="#9bb66a" stroke-width="9"/>
+<path d="M120 430Q260 280 420 310T720 220T1030 230T1430 330" fill="none" stroke="#b9d17c" stroke-width="35" opacity=".22"/>
+<path d="M130 490Q310 380 480 430T800 345T1120 390T1450 320" fill="none" stroke="#1e5c70" stroke-width="18" opacity=".9"/>
+<path d="M130 490Q310 380 480 430T800 345T1120 390T1450 320" fill="none" stroke="#72b5c0" stroke-width="5" opacity=".8"/>
+<g opacity=".96">
+ <use href="#tree" x="190" y="350"/><use href="#tree" x="235" y="390"/><use href="#tree" x="285" y="315"/><use href="#tree" x="345" y="365"/><use href="#tree" x="405" y="260"/><use href="#tree" x="470" y="300"/><use href="#tree" x="530" y="250"/><use href="#tree" x="590" y="325"/><use href="#tree" x="650" y="260"/><use href="#tree" x="700" y="190"/><use href="#tree" x="760" y="245"/><use href="#tree" x="825" y="180"/><use href="#tree" x="900" y="220"/><use href="#tree" x="980" y="165"/><use href="#tree" x="1040" y="240"/><use href="#tree" x="1120" y="180"/><use href="#tree" x="1190" y="240"/><use href="#tree" x="1280" y="200"/><use href="#tree" x="1370" y="280"/><use href="#tree" x="1420" y="365"/>
+ <use href="#tree" x="240" y="520"/><use href="#tree" x="340" y="570"/><use href="#tree" x="470" y="530"/><use href="#tree" x="600" y="600"/><use href="#tree" x="760" y="580"/><use href="#tree" x="920" y="610"/><use href="#tree" x="1080" y="570"/><use href="#tree" x="1240" y="520"/><use href="#tree" x="1370" y="470"/>
+</g>
+<g opacity=".95">
+ <use href="#house" x="270" y="420"/><use href="#house" x="330" y="450"/><use href="#house" x="385" y="395"/><use href="#house" x="505" y="360"/><use href="#house" x="560" y="390"/><use href="#house" x="650" y="475"/><use href="#house" x="720" y="515"/><use href="#house" x="850" y="445"/><use href="#house" x="940" y="480"/><use href="#house" x="1100" y="430"/><use href="#house" x="1180" y="460"/>
+</g>
+<path d="M90 570Q290 470 470 500T800 390T1110 420T1510 330" fill="none" stroke="#222b28" stroke-width="50" stroke-linecap="round"/>
+<path d="M90 570Q290 470 470 500T800 390T1110 420T1510 330" fill="none" stroke="url(#road)" stroke-width="42" stroke-linecap="round"/>
+<path d="M90 570Q290 470 470 500T800 390T1110 420T1510 330" fill="none" stroke="#f1d99b" stroke-width="2.5" stroke-dasharray="22 24"/>
+<path d="M350 280Q500 345 650 305T950 300T1250 380" fill="none" stroke="#242b28" stroke-width="34" stroke-linecap="round"/>
+<path d="M350 280Q500 345 650 305T950 300T1250 380" fill="none" stroke="#a9b0a7" stroke-width="28" stroke-linecap="round"/>
+<path d="M350 280Q500 345 650 305T950 300T1250 380" fill="none" stroke="#f1d99b" stroke-width="2" stroke-dasharray="17 18"/>
+<g>
+ <path d="M1110 420 1120 260 1140 245 1160 420Z" fill="url(#building)" stroke="#d5dfd9" stroke-width="4"/>
+ <path d="M1170 420 1185 230 1205 210 1220 420Z" fill="url(#building)" stroke="#d5dfd9" stroke-width="4"/>
+ <path d="M1127 300h24M1124 340h28M1120 380h34M1187 280h27M1183 330h32M1179 375h38" stroke="#e6e5d7" stroke-width="5"/>
+ <path d="M1060 430 1070 315 1090 305 1105 430Z" fill="url(#building)"/>
+ <use href="#tower" x="1040" y="270"/>
+ <path d="M1036 266h16l-8-15Z" fill="#e8e5d9"/>
+</g>
+<g fill="#d6e1d5" stroke="#51635b" stroke-width="3">
+ <path d="M690 420 705 330 735 318 750 420Z"/><path d="M760 445 775 355 805 342 820 445Z"/>
+ <path d="M900 475 915 360 950 345 965 475Z"/><path d="M470 440 480 370 505 360 515 440Z"/>
+</g>
+<g fill="#fff" opacity=".8" filter="url(#soft)"><ellipse cx="360" cy="185" rx="80" ry="20"/><ellipse cx="1240" cy="145" rx="100" ry="25"/></g>
+</svg>
