@@ -90,7 +90,54 @@
     session.classList.remove('hidden');
     $('sessionName').textContent = user.displayName ? 'Welcome, ' + user.displayName + '.' : 'Welcome to HOUS.';
     $('sessionEmail').textContent = user.email || '';
+    $('profileEmail').textContent = user.email || '—';
     subtitle.textContent = 'You are securely signed in to your HOUS account.';
+    loadMemberData(user);
+  }
+
+  let profileListener = null;
+  let subscriptionListener = null;
+
+  function loadMemberData(user) {
+    if (profileListener) profileListener.off();
+    if (subscriptionListener) subscriptionListener.off();
+
+    profileListener = db.ref('users/' + user.uid);
+    profileListener.on('value', snapshot => {
+      const profile = snapshot.val() || {};
+      $('sessionName').textContent = 'Welcome, ' + (profile.name || user.displayName || 'HOUS member') + '.';
+      $('profilePhone').textContent = profile.phone || 'Not added';
+    }, error => {
+      console.warn('HOUS profile read:', error);
+      $('profilePhone').textContent = 'Profile unavailable';
+    });
+
+    subscriptionListener = db.ref('subscriptions/' + user.uid);
+    subscriptionListener.on('value', snapshot => {
+      const sub = snapshot.val();
+      const status = $('subscriptionStatus');
+      const quota = $('memberQuota');
+      if (!sub || String(sub.status || '').toLowerCase() !== 'active') {
+        status.textContent = 'NOT ACTIVE';
+        status.classList.add('pending');
+        $('subscriptionPlan').textContent = 'No active subscription';
+        $('subscriptionDescription').textContent = 'Choose a plan below. Your 30-day membership begins only after HOUS verifies your payment.';
+        quota.classList.add('hidden');
+        return;
+      }
+      status.textContent = 'ACTIVE';
+      status.classList.remove('pending');
+      $('subscriptionPlan').textContent = 'PLAN ' + (sub.plan || '—');
+      $('subscriptionDescription').textContent = 'Your HOUS subscription is active.';
+      $('quotaValue').textContent = (Number(sub.remainingQuota) || 0) + ' / ' + (Number(sub.totalQuota) || 0);
+      $('subscriptionExpiry').textContent = sub.expiryDate ? 'Valid until ' + sub.expiryDate : '';
+      quota.classList.remove('hidden');
+    }, error => {
+      console.warn('HOUS subscription read:', error);
+      $('subscriptionStatus').textContent = 'NOT AVAILABLE';
+      $('subscriptionDescription').textContent = 'Membership information is not available yet.';
+      quota.classList.add('hidden');
+    });
   }
 
   function switchMode(nextMode) {
@@ -104,6 +151,13 @@
   }
 
   modeButtons.forEach(button => button.addEventListener('click', () => switchMode(button.dataset.mode)));
+
+  document.querySelectorAll('.plan-select').forEach(link => link.addEventListener('click', event => {
+    event.preventDefault();
+    const chosenPlan = link.dataset.plan;
+    showMessage('Plan ' + chosenPlan + ' selected. Payment request and receipt upload will be enabled in the next step.', false);
+    $('authSession').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }));
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -164,6 +218,8 @@
 
   $('signOutBtn').addEventListener('click', async () => {
     try {
+      if (profileListener) { profileListener.off(); profileListener = null; }
+      if (subscriptionListener) { subscriptionListener.off(); subscriptionListener = null; }
       await auth.signOut();
       switchMode('login');
       showMessage('You have been signed out.', false);
