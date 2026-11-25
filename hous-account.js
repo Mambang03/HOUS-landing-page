@@ -25,6 +25,9 @@
   let mode = 'register';
   let auth = null;
   let db = null;
+  let storage = null;
+  let currentUser = null;
+  let paymentHistoryRef = null;
 
   function showMessage(text, isError) {
     message.textContent = text;
@@ -140,6 +143,128 @@
     });
   }
 
+  const PLAN_CONFIG = {
+    A: { amount: 35, quota: 1 },
+    B: { amount: 65, quota: 2 }
+  };
+  const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
+  const ALLOWED_RECEIPT_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+
+  function showPaymentMessage(text, isError) {
+    const el = $('paymentMessage');
+    if (!el) return;
+    el.textContent = text;
+    el.classList.toggle('error', !!isError);
+  }
+
+  function renderPaymentHistory(snapshot) {
+    const wrap = $('paymentHistory');
+    if (!wrap) return;
+    const requests = snapshot.val() || {};
+    const entries = Object.entries(requests).sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+    if (!entries.length) {
+      wrap.innerHTML = '<strong>YOUR PAYMENT REQUESTS</strong><p>No payment requests submitted yet.</p>';
+      return;
+    }
+    const rows = entries.map(([id, item]) => {
+      const plan = item.plan === 'B' ? 'Plan B' : 'Plan A';
+      const date = item.createdAt ? new Date(item.createdAt).toLocaleString() : 'Recently submitted';
+      const status = String(item.status || 'pending').replace(/</g, '&lt;').toUpperCase();
+      return '<div class="payment-history-row"><span><b>' + plan + ' · RM' + Number(item.amount || 0) + '</b><small>' + date + '</small></span><em>' + status + '</em></div>';
+    }).join('');
+    wrap.innerHTML = '<strong>YOUR PAYMENT REQUESTS</strong>' + rows;
+  }
+
+  function watchPaymentHistory(user) {
+    if (paymentHistoryRef) paymentHistoryRef.off();
+    paymentHistoryRef = db.ref('paymentRequests/' + user.uid);
+    paymentHistoryRef.on('value', renderPaymentHistory, error => {
+      console.warn('HOUS payment history read:', error);
+      showPaymentMessage('Payment history is unavailable. Please check the paymentRequests database rules.', true);
+    });
+  }
+
+  async function submitPaymentRequest(event) {
+    event.preventDefault();
+    showPaymentMessage('', false);
+    if (!currentUser) {
+      showPaymentMessage('Please sign in before submitting a membership payment.', true);
+      return;
+    }
+    const plan = $('paymentPlan').value;
+    const file = $('receiptFile').files && $('receiptFile').files[0];
+    const reference = $('paymentReference').value.trim();
+    if (!PLAN_CONFIG[plan]) {
+      showPaymentMessage('Please select Plan A or Plan B.', true);
+      return;
+    }
+    if (!file) {
+      showPaymentMessage('Please choose your payment receipt.', true);
+      return;
+    }
+    if (!ALLOWED_RECEIPT_TYPES.includes(file.type)) {
+      showPaymentMessage('Unsupported file type. Upload JPG, PNG, WEBP or PDF.', true);
+      return;
+    }
+    if (file.size > MAX_RECEIPT_BYTES) {
+      showPaymentMessage('Your receipt is larger than 5 MB. Please choose a smaller file.', true);
+      return;
+    }
+    if (!storage) {
+      showPaymentMessage('Firebase Storage is not initialized. Enable Firebase Storage for the HOUS project, then try again.', true);
+      return;
+    }
+
+    const config = PLAN_CONFIG[plan];
+    const requestRef = db.ref('paymentRequests/' + currentUser.uid).push();
+    const requestId = requestRef.key;
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 90);
+    const receiptPath = 'paymentReceipts/' + currentUser.uid + '/' + requestId + '/' + safeName;
+    const submitButton = $('paymentSubmitBtn');
+    submitButton.disabled = true;
+    submitButton.textContent = 'UPLOADING RECEIPT…';
+
+    try {
+      const receiptRef = storage.ref(receiptPath);
+      const upload = await receiptRef.put(file, {
+        contentType: file.type,
+        customMetadata: { uid: currentUser.uid, requestId: requestId }
+      });
+      await requestRef.set({
+        requestId: requestId,
+        uid: currentUser.uid,
+        plan: plan,
+        amount: config.amount,
+        haircutQuota: config.quota,
+        transferReference: reference || null,
+        receiptPath: receiptPath,
+        receiptContentType: file.type,
+        receiptSize: file.size,
+        status: 'pending',
+        createdAt: firebase.database.ServerValue.TIMESTAMP
+      });
+      $('paymentForm').reset();
+      showPaymentMessage('Receipt uploaded successfully. Your request is pending HOUS verification. Your membership is not active yet.', false);
+    } catch (error) {
+      console.error('HOUS payment submission error:', error);
+      const code = error && error.code ? error.code : '';
+      const messageText = code === 'storage/unauthorized'
+        ? 'Upload permission denied. Check the Firebase Storage rules for paymentReceipts/{uid}.'
+        : code === 'PERMISSION_DENIED'
+          ? 'Payment request could not be saved. Check the paymentRequests Realtime Database rules.'
+          : (error && error.message) || 'Could not submit your receipt. Please try again.';
+      showPaymentMessage(messageText, true);
+      // If database creation failed after upload, remove the orphaned receipt.
+      try { await storage.ref(receiptPath).delete(); } catch (cleanupError) { console.warn('Receipt cleanup:', cleanupError); }
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'UPLOAD RECEIPT <span>↗</span>';
+    }
+  }
+
+  const paymentForm = $('paymentForm');
+  if (paymentForm) paymentForm.addEventListener('submit', submitPaymentRequest);
+
   function switchMode(nextMode) {
     mode = nextMode;
     modeButtons.forEach(button => {
@@ -155,8 +280,14 @@
   document.querySelectorAll('.plan-select').forEach(link => link.addEventListener('click', event => {
     event.preventDefault();
     const chosenPlan = link.dataset.plan;
-    $('memberActionMessage').textContent = 'Plan ' + chosenPlan + ' selected. Payment request and receipt upload will be enabled in the next step.';
-    $('authSession').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!currentUser) {
+      $('memberActionMessage').textContent = 'Please create an account or sign in before submitting a membership payment.';
+      $('authSession').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    $('paymentPlan').value = chosenPlan;
+    $('memberActionMessage').textContent = 'Plan ' + chosenPlan + ' selected. Complete your bank transfer / DuitNow payment, then upload the receipt below.';
+    $('paymentWorkflow').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }));
 
   form.addEventListener('submit', async event => {
@@ -232,7 +363,13 @@
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.database();
-    auth.onAuthStateChanged(user => setSignedIn(user));
+    storage = firebase.storage();
+    auth.onAuthStateChanged(user => {
+      currentUser = user || null;
+      setSignedIn(user);
+      if (user) watchPaymentHistory(user);
+      else if (paymentHistoryRef) { paymentHistoryRef.off(); paymentHistoryRef = null; }
+    });
     renderMode();
   } catch (error) {
     console.error('HOUS Firebase initialization error:', error);
