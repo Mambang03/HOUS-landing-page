@@ -155,7 +155,7 @@
   document.querySelectorAll('.plan-select').forEach(link => link.addEventListener('click', event => {
     event.preventDefault();
     const chosenPlan = link.dataset.plan;
-    showMessage('Plan ' + chosenPlan + ' selected. Payment request and receipt upload will be enabled in the next step.', false);
+    $('memberActionMessage').textContent = 'Plan ' + chosenPlan + ' selected. Payment request and receipt upload will be enabled in the next step.';
     $('authSession').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }));
 
