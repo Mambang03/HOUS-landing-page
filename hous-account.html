@@ -64,9 +64,8 @@
           <button class="switch-btn" data-mode="login" role="tab" aria-selected="false">Sign in</button>
         </div>
 
-        <div class="method-switch" role="tablist" aria-label="Registration method">
-          <button class="method-btn active" data-method="email" role="tab" aria-selected="true"><span>✉</span> Email</button>
-          <button class="method-btn" data-method="phone" role="tab" aria-selected="false"><span>⌕</span> Phone + OTP</button>
+        <div class="method-switch auth-method-note">
+          <span>✉</span> EMAIL + PASSWORD ACCOUNT
         </div>
 
         <form id="accountForm">
@@ -77,6 +76,7 @@
           <div class="field" id="phoneField">
             <label for="phone">PHONE NUMBER</label>
             <input id="phone" name="phone" autocomplete="tel" placeholder="+60 12 345 6789" inputmode="tel">
+            <small class="field-hint">Optional — you can add this to your profile.</small>
           </div>
           <div class="field" id="emailField">
             <label for="email">EMAIL ADDRESS</label>
@@ -91,9 +91,17 @@
             <input id="otp" name="otp" inputmode="numeric" placeholder="Enter 6-digit code">
           </div>
           <button class="primary-btn" type="submit" id="submitBtn">CREATE ACCOUNT <span>↗</span></button>
+          <button class="text-action hidden" type="button" id="resetPasswordBtn">Forgot password?</button>
           <p class="form-note" id="formNote">By continuing, you agree to the HOUS membership terms and privacy policy.</p>
           <p class="demo-message" id="demoMessage" aria-live="polite"></p>
         </form>
+        <section class="auth-session hidden" id="authSession" aria-live="polite">
+          <p class="eyebrow"><span></span> SIGNED IN</p>
+          <h3 id="sessionName">Welcome to HOUS.</h3>
+          <p id="sessionEmail"></p>
+          <p class="session-note">Your HOUS account is connected. Membership activation and payment verification will be added in the next phase.</p>
+          <button class="primary-btn" type="button" id="signOutBtn">SIGN OUT <span>↗</span></button>
+        </section>
         <div class="guest-option">
           <span>JUST HERE FOR A QUICK CUT?</span>
           <a href="hous_barbershop_online_booking.html">Continue as guest <b>→</b></a>
@@ -166,6 +174,9 @@
     <span>GOOD GROOMING. NO SHORTCUTS.</span>
     <a href="index.html">BACK TO HOME ↑</a>
   </footer>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <script src="hous-account.js"></script>
 </body>
 </html>
