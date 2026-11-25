@@ -87,3 +87,15 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .footer{border-top:1px solid var(--line);padding:25px max(4vw,24px);display:flex;align-items:center;justify-content:space-between;gap:20px}.footer>span,.footer>a:last-child{font-size:9px;letter-spacing:.13em;font-weight:700;color:#77776f}.footer>a:last-child:hover{color:var(--accent)}
 @media(max-width:850px){.intro{gap:25px}.portal-grid{grid-template-columns:1fr}.plan-panel{min-height:unset}.dashboard{grid-template-columns:1fr}.dash-side{display:grid;grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.header{height:70px}.header-nav{display:none}.header-cta{font-size:9px;padding:11px 14px}.intro{grid-template-columns:1fr;padding:48px 0 38px}.intro h1{font-size:65px}.intro-art{height:235px}.intro-points{gap:10px}.intro-points span{font-size:8px}.panel-heading h2{font-size:39px}.step-label{font-size:8px}.portal-grid{gap:14px}.dashboard-preview{padding:62px 0}.preview-heading{align-items:flex-start;flex-direction:column}.dashboard{padding:9px}.dash-welcome{padding:19px 13px 8px}.subscription-status{padding:18px 15px}.dash-side{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column}.footer>span{order:3}}
+/* Firebase Authentication additions */
+.auth-method-note{align-items:center;color:#6f6f67;font-size:10px;font-weight:700;letter-spacing:.12em}
+.auth-method-note span{color:var(--accent);font-size:15px;margin-right:8px}
+.field-hint{display:block;margin-top:6px;color:#92928a;font-size:10px}
+.text-action{display:block;margin:10px auto 0;border:0;background:transparent;color:var(--accent);font-size:11px;font-weight:700;cursor:pointer}
+.demo-message.error{color:#c43b2d}
+.primary-btn:disabled{opacity:.65;cursor:wait;transform:none}
+.auth-session{margin-top:22px;padding:22px;border:1px solid var(--line);border-radius:15px;background:#fbfbf9}
+.auth-session h3{font:400 30px/1.1 var(--serif);margin:12px 0 5px}
+.auth-session>p:not(.eyebrow){font-size:12px;color:#66665f;overflow-wrap:anywhere}
+.auth-session .session-note{margin-top:15px;padding-top:13px;border-top:1px solid var(--line);line-height:1.7}
+.auth-session .primary-btn{margin-top:20px}
