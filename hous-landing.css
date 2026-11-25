@@ -523,7 +523,7 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
 .coverage-stage{
   position:relative;
   width:100%;
-  max-width:1020px;
+  max-width:880px;
   margin:0 auto;
   aspect-ratio:3/2;
   isolation:isolate;
