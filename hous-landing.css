@@ -423,3 +423,42 @@ body{background:var(--paper);color:var(--ink);font-family:'Poppins',Arial,sans-s
 .hous-social-arrow{margin-left:auto;font-size:1rem;transition:transform .2s}
 .hous-social-link:hover .hous-social-arrow{transform:translate(3px,-3px)}
 @media(max-width:700px){.hous-socials{padding:54px 0 58px}.hous-social-links{grid-template-columns:1fr}.hous-social-link{padding:16px}.hous-socials-heading{text-align:left}.hous-socials-heading>p:last-child{margin-left:0}}
+
+
+/* ===== FOOTER — MATCH BOOKING SYSTEM ===== */
+footer{
+  --paper:#ECECE8;
+  --line:rgba(17,17,16,.14);
+  --accent:#E84E0F;
+  --ink:#111110;
+  --muted:#6C6C65;
+  border-top:1px solid var(--line);
+  padding:56px 0 36px;
+  background:var(--paper);
+}
+footer .foot-top{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:36px;
+  padding-bottom:34px;
+  border-bottom:1px solid var(--line);
+}
+footer .foot-brand-col{display:flex;flex-direction:column;gap:12px}
+footer .foot-logo{height:70px;width:auto;object-fit:contain;object-position:left center;display:block;filter:grayscale(100%)}
+footer .foot-tagline{font-size:.85rem;color:var(--muted);max-width:310px;line-height:1.65}
+footer .foot-col h4{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 14px}
+footer .foot-col h4::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+footer .foot-hours-list{list-style:none;font-size:.84rem;color:#4A4A44;display:flex;flex-direction:column;gap:6px;padding:0;margin:0}
+footer .foot-hours-list li{display:flex;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+footer .foot-hours-list li:last-child{border-bottom:0;padding-bottom:0}
+footer .foot-hours-list span{color:var(--muted);font-weight:500}
+footer .foot-hours-list strong{color:var(--ink);font-weight:600}
+footer .foot-closed-note{display:inline-block;font-size:.74rem;color:var(--accent);margin-top:8px;font-weight:600}
+footer .foot-address{font-size:.84rem;color:#4A4A44;line-height:1.65;margin:0 0 10px}
+footer .foot-map-link{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:2px}
+footer .foot-map-link:hover{color:var(--accent)}
+footer .foot-bottom{padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}
+footer .foot-bottom a{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid transparent;transition:border-color .2s ease}
+footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
+@media(max-width:820px){footer .foot-top{grid-template-columns:1fr;gap:28px}}
+@media(max-width:600px){footer{padding:42px 0 28px}footer .foot-bottom{align-items:flex-start;flex-direction:column;gap:10px}footer .foot-hours-list li{justify-content:flex-start;flex-wrap:wrap}}
