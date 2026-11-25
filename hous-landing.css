@@ -403,3 +403,23 @@ body{background:var(--paper);color:var(--ink);font-family:'Poppins',Arial,sans-s
 }
 @media(max-width:380px){.hous-coverage{min-height:660px}.coverage-content{min-height:560px}.map-pin{font-size:.4rem}.map-pin b{padding:5px 6px}.coverage-info{gap:7px}.coverage-info p{letter-spacing:.025em}.coverage-info strong{font-size:.63rem}}
 @media(prefers-reduced-motion:reduce){.coverage-map *{scroll-behavior:auto}.core-ring{animation:none}.map-pin{transition:none}}
+
+
+/* ===== HOUS SOCIAL LINKS ===== */
+.hous-socials{padding:76px 0 82px;background:#e8e6e0;color:#111}
+.hous-socials-heading{max-width:700px;margin:0 auto 30px;text-align:center}
+.hous-socials-heading .kicker{margin-bottom:10px}
+.hous-socials-heading h2{font-family:'Poppins',sans-serif;font-size:clamp(2rem,4.5vw,3.7rem);font-weight:400;letter-spacing:-.065em;line-height:1.02}
+.hous-socials-heading>p:last-child{max-width:480px;margin:14px auto 0;color:#62605b;font-size:.8rem}
+.hous-social-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hous-social-link{display:flex;align-items:center;gap:14px;min-width:0;padding:20px 18px;border:1px solid #c7c4bd;background:#f2f0eb;color:#111;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.hous-social-link:hover{background:#fff;border-color:#111;transform:translateY(-3px)}
+.hous-social-icon{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:1px solid #aaa69e;border-radius:50%}
+.hous-social-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hous-social-icon svg .social-icon-fill{fill:currentColor;stroke:none}
+.hous-social-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.hous-social-copy strong{font-size:.62rem;letter-spacing:.13em}
+.hous-social-copy small{font-size:.7rem;color:#68645d;overflow-wrap:anywhere}
+.hous-social-arrow{margin-left:auto;font-size:1rem;transition:transform .2s}
+.hous-social-link:hover .hous-social-arrow{transform:translate(3px,-3px)}
+@media(max-width:700px){.hous-socials{padding:54px 0 58px}.hous-social-links{grid-template-columns:1fr}.hous-social-link{padding:16px}.hous-socials-heading{text-align:left}.hous-socials-heading>p:last-child{margin-left:0}}
