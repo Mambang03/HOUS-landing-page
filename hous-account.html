@@ -99,7 +99,20 @@
           <p class="eyebrow"><span></span> SIGNED IN</p>
           <h3 id="sessionName">Welcome to HOUS.</h3>
           <p id="sessionEmail"></p>
-          <p class="session-note">Your HOUS account is connected. Membership activation and payment verification will be added in the next phase.</p>
+          <div class="member-profile">
+            <div><small>EMAIL ADDRESS</small><strong id="profileEmail">—</strong></div>
+            <div><small>PHONE NUMBER</small><strong id="profilePhone">Not added</strong></div>
+          </div>
+          <div class="live-subscription" id="liveSubscription">
+            <div class="status-head"><span>YOUR SUBSCRIPTION</span><span class="status-pill pending" id="subscriptionStatus">NOT ACTIVE</span></div>
+            <h4 id="subscriptionPlan">No active subscription</h4>
+            <p id="subscriptionDescription">Choose a plan below. Your 30-day membership begins only after HOUS verifies your payment.</p>
+            <div class="member-quota hidden" id="memberQuota">
+              <span>HAIRCUTS REMAINING</span><strong id="quotaValue">—</strong>
+              <small id="subscriptionExpiry"></small>
+            </div>
+          </div>
+          <p class="session-note">Your account is live. Subscription activation, payment verification and quota changes are managed by HOUS.</p>
           <button class="primary-btn" type="button" id="signOutBtn">SIGN OUT <span>↗</span></button>
         </section>
         <div class="guest-option">
@@ -131,41 +144,39 @@
       </aside>
     </section>
 
-    <section class="dashboard-preview">
+    <section class="dashboard-preview" id="plans">
       <div class="preview-heading">
-        <div><p class="eyebrow">AFTER YOU SIGN IN</p><h2>Your member space<span>.</span></h2></div>
-        <span class="preview-label">DASHBOARD PREVIEW / DEMO DATA</span>
+        <div><p class="eyebrow">YOUR ACCOUNT</p><h2>Membership plans<span>.</span></h2></div>
+        <span class="preview-label">RM35 / RM65 · 30 DAYS</span>
       </div>
       <div class="dashboard">
         <div class="dash-main">
           <div class="dash-welcome">
-            <div><p class="eyebrow light">GOOD EVENING, AHMAD</p><h3>Welcome back<span>.</span></h3><p>Your next appointment starts with a good plan.</p></div>
-            <div class="avatar">AH</div>
+            <div><p class="eyebrow light">THE HOUS CLUB</p><h3>Make grooming a routine<span>.</span></h3><p>Choose the monthly plan that works for you.</p></div>
+            <div class="avatar">H</div>
           </div>
           <div class="subscription-status">
-            <div class="status-head"><span>YOUR SUBSCRIPTION</span><span class="status-pill"><i></i> ACTIVE</span></div>
-            <div class="sub-info"><div><small>CURRENT PLAN</small><strong>PLAN B <em>· 2 HAIRCUTS</em></strong></div><div class="expiry"><small>VALID UNTIL</small><strong>15 DEC 2026</strong></div></div>
-            <div class="quota-row"><span>HAIRCUTS REMAINING</span><strong>1 <small>/ 2</small></strong></div>
-            <div class="quota-track"><span></span></div>
-            <div class="quota-caption"><span>1 session used</span><span>1 session available</span></div>
-            <a href="hous_barbershop_online_booking.html" class="light-btn">BOOK WITH SUBSCRIPTION <b>↗</b></a>
+            <div class="status-head"><span>PLAN A</span><span class="status-pill">RM35</span></div>
+            <div class="sub-info"><div><small>INCLUDES</small><strong>1 HAIRCUT</strong></div><div class="expiry"><small>PERIOD</small><strong>30 DAYS</strong></div></div>
+            <p class="plan-feature">Manual renewal · No rollover of unused quota.</p>
+            <a href="#account" class="light-btn plan-select" data-plan="A">SELECT PLAN A <b>↗</b></a>
           </div>
         </div>
         <div class="dash-side">
           <div class="dash-widget next-booking">
-            <div class="widget-title"><span>NEXT APPOINTMENT</span><span>↗</span></div>
-            <p class="empty-state">No upcoming appointment</p>
-            <a href="hous_barbershop_online_booking.html">Find a time <b>→</b></a>
+            <div class="widget-title"><span>PLAN B</span><span>RM65</span></div>
+            <p class="empty-state">2 haircuts<br>30 days</p>
+            <p class="plan-feature">Manual renewal · No rollover of unused quota.</p>
+            <a href="#account" class="plan-select" data-plan="B">SELECT PLAN B <b>→</b></a>
           </div>
           <div class="dash-widget">
-            <div class="widget-title"><span>QUICK ACCESS</span><span>＋</span></div>
-            <a class="quick-link" href="#account"><span class="quick-icon">◈</span> Manage subscription <b>→</b></a>
-            <a class="quick-link" href="#account"><span class="quick-icon">▤</span> Payment history <b>→</b></a>
-            <a class="quick-link" href="#account"><span class="quick-icon">◎</span> Personal details <b>→</b></a>
+            <div class="widget-title"><span>MEMBER BENEFIT</span><span>✦</span></div>
+            <p class="plan-feature">24-hour early access to booking slots for active subscribers.</p>
+            <p class="plan-feature">Payment by bank transfer / DuitNow QR, with manual receipt verification.</p>
           </div>
         </div>
       </div>
-      <p class="demo-footnote">Dashboard preview uses sample information only. Live account data, authentication, payments and quota tracking will be connected in the development phase.</p>
+      <p class="demo-footnote">Membership is activated only after manual payment verification by HOUS. Unused haircut quota does not roll over.</p>
     </section>
   </main>
 
