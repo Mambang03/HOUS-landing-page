@@ -99,3 +99,18 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .auth-session>p:not(.eyebrow){font-size:12px;color:#66665f;overflow-wrap:anywhere}
 .auth-session .session-note{margin-top:15px;padding-top:13px;border-top:1px solid var(--line);line-height:1.7}
 .auth-session .primary-btn{margin-top:20px}
+
+/* Live member profile and subscription status */
+.member-profile{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;padding:16px;background:#f4f4f0;border-radius:12px}
+.member-profile small{display:block;color:#88887f;font-size:8px;font-weight:700;letter-spacing:.12em;margin-bottom:5px}
+.member-profile strong{display:block;font-size:11px;overflow-wrap:anywhere}
+.live-subscription{margin-top:14px;padding:18px;border:1px solid var(--line);border-radius:13px;background:#fff}
+.live-subscription h4{font:400 25px/1.1 var(--serif);margin:15px 0 6px}
+.live-subscription>p{font-size:11px;color:#77776f;line-height:1.6}
+.status-pill.pending{background:#eee9df;color:#80633b}
+.member-quota{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:13px;border-top:1px solid var(--line)}
+.member-quota span,.member-quota small{font-size:9px;color:#77776f}
+.member-quota strong{font:25px var(--serif)}
+.plan-select{cursor:pointer}
+.plan-feature{font-size:11px;color:#c5c4bb;line-height:1.6;margin-top:12px}
+@media(max-width:600px){.member-profile{grid-template-columns:1fr}}
