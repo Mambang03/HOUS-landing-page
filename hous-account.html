@@ -112,6 +112,42 @@
               <small id="subscriptionExpiry"></small>
             </div>
           </div>
+          <section class="payment-workflow" id="paymentWorkflow">
+            <div class="payment-heading">
+              <div><p class="eyebrow">MEMBERSHIP PAYMENT</p><h4>Submit your payment<span>.</span></h4></div>
+              <span class="status-pill pending">MANUAL REVIEW</span>
+            </div>
+            <p class="payment-copy">Choose a plan, make payment using the official HOUS bank transfer / DuitNow QR details, then upload your receipt. Your membership stays inactive until HOUS verifies the payment.</p>
+            <div class="payment-instructions">
+              <strong>PAYMENT DETAILS</strong>
+              <p>HOUS bank account and DuitNow QR details will be displayed here once the official payment information is configured.</p>
+            </div>
+            <form id="paymentForm">
+              <div class="field">
+                <label for="paymentPlan">SELECT MEMBERSHIP PLAN</label>
+                <select id="paymentPlan" required>
+                  <option value="">Choose a plan</option>
+                  <option value="A">Plan A — RM35 / 1 haircut</option>
+                  <option value="B">Plan B — RM65 / 2 haircuts</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="paymentReference">TRANSFER REFERENCE (OPTIONAL)</label>
+                <input id="paymentReference" maxlength="80" placeholder="e.g. HOUS + your name">
+              </div>
+              <div class="field">
+                <label for="receiptFile">PAYMENT RECEIPT</label>
+                <input id="receiptFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required>
+                <small class="field-hint">JPG, PNG, WEBP or PDF · Maximum 5 MB</small>
+              </div>
+              <button class="primary-btn" id="paymentSubmitBtn" type="submit">UPLOAD RECEIPT <span>↗</span></button>
+              <p class="payment-message" id="paymentMessage" aria-live="polite"></p>
+            </form>
+            <div class="payment-history" id="paymentHistory">
+              <strong>YOUR PAYMENT REQUESTS</strong>
+              <p>No payment requests submitted yet.</p>
+            </div>
+          </section>
           <p class="session-note">Your account is live. Subscription activation, payment verification and quota changes are managed by HOUS.</p>
           <p class="demo-message" id="memberActionMessage" aria-live="polite"></p>
           <button class="primary-btn" type="button" id="signOutBtn">SIGN OUT <span>↗</span></button>
@@ -189,6 +225,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
   <script src="hous-account.js"></script>
 </body>
 </html>
