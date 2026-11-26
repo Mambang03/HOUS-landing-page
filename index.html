@@ -517,40 +517,11 @@ fbq('track', 'PageView');
     var panel = $('serviceSelection');
     if (!panel) return;
 
-    var list = $('selectionList');
-    list.innerHTML = '';
-
     if (!selected.length) {
       panel.classList.remove('is-visible');
       panel.setAttribute('aria-hidden', 'true');
       return;
     }
-
-    selected.forEach(function (i) {
-      var s = SERVICES[i];
-      var li = document.createElement('li');
-      li.className = 'selection-item';
-
-      var details = document.createElement('div');
-      var name = document.createElement('div');
-      name.className = 'selection-item-name';
-      name.textContent = s.name;
-
-      var meta = document.createElement('div');
-      meta.className = 'selection-item-meta';
-      meta.textContent = 'EST. ' + durText(s);
-
-      details.appendChild(name);
-      details.appendChild(meta);
-
-      var price = document.createElement('div');
-      price.className = 'selection-item-price';
-      price.textContent = priceText(s);
-
-      li.appendChild(details);
-      li.appendChild(price);
-      list.appendChild(li);
-    });
 
     $('selectionCount').textContent = selected.length;
     $('selectionPrice').textContent = 'RM ' + selectedTotal();
