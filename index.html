@@ -222,23 +222,16 @@ fbq('track', 'PageView');
         <p>Considered services, transparent pricing. Explore our grooming services and choose your preferred treatment when you book.</p>
       </div>
       <div class="svc-grid" id="svcGrid"></div>
-      <section class="service-selection" id="serviceSelection" aria-live="polite" aria-label="Your selected services">
-        <div class="selection-top">
-          <div>
-            <p class="selection-eyebrow">YOUR HOUS SELECTION</p>
-            <h3 class="selection-heading">A little more you.</h3>
-          </div>
-          <span class="selection-count" id="selectionCount">0 SERVICES</span>
+      <section class="service-selection" id="serviceSelection" aria-live="polite" aria-label="Your selected services" aria-hidden="true">
+        <span class="selection-count" id="selectionCount">0</span>
+        <div class="selection-copy">
+          <strong class="selection-price" id="selectionPrice">RM 0</strong>
+          <span class="selection-summary" id="selectionSummary">No services selected</span>
+          <span class="selection-duration" id="selectionDuration">—</span>
         </div>
-        <ul class="selection-list" id="selectionList"></ul>
-        <div class="selection-totals">
-          <div class="selection-total"><span>Estimated total</span><strong id="selectionPrice">RM 0</strong></div>
-          <div class="selection-total"><span>Estimated time</span><strong id="selectionDuration">—</strong></div>
-        </div>
-        <p class="selection-note">Estimated price and duration are based on the services selected. Final timing may vary depending on hair length, condition and consultation.</p>
         <div class="selection-actions">
-          <a class="btn selection-book" id="selectionBookingLink" href="hous_barbershop_online_booking.html">Continue to Booking ↗</a>
-          <button class="selection-clear" id="clearSelection" type="button">CLEAR SELECTION</button>
+          <button class="selection-clear" id="clearSelection" type="button" aria-label="Clear selected services">CLEAR</button>
+          <a class="selection-book" id="selectionBookingLink" href="hous_barbershop_online_booking.html">Book Selection ↗</a>
         </div>
       </section>
     </div>
@@ -559,9 +552,10 @@ fbq('track', 'PageView');
       list.appendChild(li);
     });
 
-    $('selectionCount').textContent = selected.length + (selected.length === 1 ? ' SERVICE' : ' SERVICES');
+    $('selectionCount').textContent = selected.length;
     $('selectionPrice').textContent = 'RM ' + selectedTotal();
-    $('selectionDuration').textContent = minsToText(appointmentMinutes());
+    $('selectionDuration').textContent = '~' + minsToText(appointmentMinutes());
+    $('selectionSummary').textContent = selected.map(function (i) { return SERVICES[i].name; }).join(', ');
 
     // The booking page reads ?services=0,2 and preselects the same services.
     var params = new URLSearchParams();
