@@ -236,7 +236,10 @@ fbq('track', 'PageView');
           <div class="selection-total"><span>Estimated time</span><strong id="selectionDetailsDuration">—</strong></div>
         </div>
         <p class="selection-note">Estimated price and duration are based on the services selected. Final timing may vary depending on hair length, condition and consultation.</p>
-        <button class="selection-clear" id="clearSelectionDetails" type="button">CLEAR SELECTION</button>
+        <div class="selection-details-actions">
+          <button class="selection-clear" id="clearSelectionDetails" type="button">CLEAR SELECTION</button>
+          <a class="selection-details-book" id="selectionDetailsBookingLink" href="hous_barbershop_online_booking.html">BOOK NOW ↗</a>
+        </div>
       </section>
       <section class="service-selection" id="serviceSelection" aria-live="polite" aria-label="Quick booking summary" aria-hidden="true">
         <span class="selection-count" id="selectionCount">0</span>
@@ -579,7 +582,9 @@ fbq('track', 'PageView');
     // The booking page reads ?services=0,2 and preselects the same services.
     var params = new URLSearchParams();
     params.set('services', selected.join(','));
-    $('selectionBookingLink').href = BOOKING_URL + '?' + params.toString();
+    var bookingHref = BOOKING_URL + '?' + params.toString();
+    $('selectionBookingLink').href = bookingHref;
+    $('selectionDetailsBookingLink').href = bookingHref;
 
     panel.classList.add('is-visible');
     panel.setAttribute('aria-hidden', 'false');
