@@ -222,7 +222,23 @@ fbq('track', 'PageView');
         <p>Considered services, transparent pricing. Explore our grooming services and choose your preferred treatment when you book.</p>
       </div>
       <div class="svc-grid" id="svcGrid"></div>
-      <section class="service-selection" id="serviceSelection" aria-live="polite" aria-label="Your selected services" aria-hidden="true">
+      <section class="service-selection-details" id="serviceSelectionDetails" aria-live="polite" aria-label="Selected services breakdown" aria-hidden="true">
+        <div class="selection-top">
+          <div>
+            <p class="selection-eyebrow">YOUR HOUS SELECTION</p>
+            <h3 class="selection-heading">A little more you.</h3>
+          </div>
+          <span class="selection-details-count" id="selectionDetailsCount">0 SERVICES</span>
+        </div>
+        <ul class="selection-list" id="selectionDetailsList"></ul>
+        <div class="selection-totals">
+          <div class="selection-total"><span>Estimated total</span><strong id="selectionDetailsPrice">RM 0</strong></div>
+          <div class="selection-total"><span>Estimated time</span><strong id="selectionDetailsDuration">—</strong></div>
+        </div>
+        <p class="selection-note">Estimated price and duration are based on the services selected. Final timing may vary depending on hair length, condition and consultation.</p>
+        <button class="selection-clear" id="clearSelectionDetails" type="button">CLEAR SELECTION</button>
+      </section>
+      <section class="service-selection" id="serviceSelection" aria-live="polite" aria-label="Quick booking summary" aria-hidden="true">
         <span class="selection-count" id="selectionCount">0</span>
         <div class="selection-copy">
           <strong class="selection-price" id="selectionPrice">RM 0</strong>
@@ -528,6 +544,38 @@ fbq('track', 'PageView');
     $('selectionDuration').textContent = '~' + minsToText(appointmentMinutes());
     $('selectionSummary').textContent = selected.map(function (i) { return SERVICES[i].name; }).join(', ');
 
+    // Keep the original full service breakdown below the service grid.
+    var detailsPanel = $('serviceSelectionDetails');
+    var detailsList = $('selectionDetailsList');
+    if (detailsPanel && detailsList) {
+      detailsList.innerHTML = '';
+      $('selectionDetailsCount').textContent = selected.length + (selected.length === 1 ? ' SERVICE' : ' SERVICES');
+      $('selectionDetailsPrice').textContent = 'RM ' + selectedTotal();
+      $('selectionDetailsDuration').textContent = minsToText(appointmentMinutes());
+      selected.forEach(function (i) {
+        var service = SERVICES[i];
+        var item = document.createElement('li');
+        item.className = 'selection-item';
+        var details = document.createElement('div');
+        var name = document.createElement('div');
+        name.className = 'selection-item-name';
+        name.textContent = service.name;
+        var meta = document.createElement('div');
+        meta.className = 'selection-item-meta';
+        meta.textContent = 'EST. ' + durText(service);
+        details.appendChild(name);
+        details.appendChild(meta);
+        var price = document.createElement('div');
+        price.className = 'selection-item-price';
+        price.textContent = priceText(service);
+        item.appendChild(details);
+        item.appendChild(price);
+        detailsList.appendChild(item);
+      });
+      detailsPanel.classList.toggle('is-visible', selected.length > 0);
+      detailsPanel.setAttribute('aria-hidden', selected.length ? 'false' : 'true');
+    }
+
     // The booking page reads ?services=0,2 and preselects the same services.
     var params = new URLSearchParams();
     params.set('services', selected.join(','));
@@ -537,9 +585,7 @@ fbq('track', 'PageView');
     panel.setAttribute('aria-hidden', 'false');
   }
 
-  var clearSelectionButton = $('clearSelection');
-  if (clearSelectionButton) {
-    clearSelectionButton.addEventListener('click', function () {
+  function clearAllServiceSelections() {
       selected = [];
       document.querySelectorAll('.svc-card.selected').forEach(function (card) {
         card.classList.remove('selected');
@@ -548,8 +594,15 @@ fbq('track', 'PageView');
       updateSelectedBox();
       updateServiceSelectionPanel();
       onSelectionChanged();
+  }
+  var clearSelectionButton = $('clearSelection');
+  if (clearSelectionButton) {
+    clearSelectionButton.addEventListener('click', function () {
+      clearAllServiceSelections();
     });
   }
+  var clearDetailsButton = $('clearSelectionDetails');
+  if (clearDetailsButton) clearDetailsButton.addEventListener('click', clearAllServiceSelections);
 
   function updateSelectedBox() {
     var ul = $('selectedList');
