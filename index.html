@@ -1087,35 +1087,65 @@ fbq('track', 'PageView');
 })();
 </script>
 
-<!-- ===== MASCOT ANIMATION ===== -->
+<!-- ===== MASCOT ANIMATION: FULL PAGE SCROLL ===== -->
 <script>
 (function () {
-  var m = document.getElementById('imgMascot'); if (!m) return;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ticking = false;
-  function clamp(v) { return Math.max(0, Math.min(1, v)); }
-  function place() {
-    ticking = false;
-    if (reduce) { m.style.opacity = 0; return; }
-    var y = window.pageYOffset, vh = window.innerHeight, W = window.innerWidth;
-    var w = m.offsetWidth || 260;
-    // Let the mascot complete its full journey over the entire page,
-    // rather than stopping when the Services section enters view.
-    var maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
-    var p = clamp(y / maxScroll);
-    var peak = W < 680 ? 0.10 : 0.13;
-    var o = peak * Math.min(1, (p + 0.04) * 10, (1 - p) * 8);
-    var x = -w + (W + w) * p;
-    var bob = Math.sin(p * 60) * 7;
-    var tilt = Math.sin(p * 60) * 2;
-    m.style.opacity = o.toFixed(3);
-    m.style.transform = 'translate3d(' + x.toFixed(1) + 'px,calc(-50% + ' + bob.toFixed(1) + 'px),0) rotate(' + tilt.toFixed(1) + 'deg)';
+  var mascot = document.getElementById('imgMascot');
+  if (!mascot) return;
+
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var framePending = false;
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
-  function req() { if (!ticking) { ticking = true; requestAnimationFrame(place); } }
-  window.addEventListener('scroll', req, { passive: true });
-  window.addEventListener('resize', req);
-  m.addEventListener('load', req);
-  req();
+
+  function updateMascotPosition() {
+    framePending = false;
+    if (reduceMotion) {
+      mascot.style.opacity = '0';
+      return;
+    }
+
+    var viewportHeight = window.innerHeight || 1;
+    var viewportWidth = window.innerWidth || 1;
+    var page = document.documentElement;
+    var maxScroll = Math.max(1, page.scrollHeight - viewportHeight);
+    var progress = clamp((window.scrollY || window.pageYOffset || 0) / maxScroll, 0, 1);
+
+    var mascotWidth = mascot.getBoundingClientRect().width || 260;
+    // Start just outside the left edge and finish fully visible near the right edge.
+    var startX = -mascotWidth;
+    var endX = Math.max(12, viewportWidth - mascotWidth - 18);
+    var x = startX + (endX - startX) * progress;
+
+    // Fade in near the top, then keep the mascot visible all the way to the footer.
+    var opacity = 0.13 * clamp(progress / 0.08, 0, 1);
+    var bob = Math.sin(progress * Math.PI * 8) * 7;
+    var tilt = Math.sin(progress * Math.PI * 8) * 2;
+
+    mascot.style.opacity = opacity.toFixed(3);
+    mascot.style.transform =
+      'translate3d(' + x.toFixed(1) + 'px, calc(-50% + ' +
+      bob.toFixed(1) + 'px), 0) rotate(' + tilt.toFixed(1) + 'deg)';
+  }
+
+  function requestUpdate() {
+    if (!framePending) {
+      framePending = true;
+      window.requestAnimationFrame(updateMascotPosition);
+    }
+  }
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  window.addEventListener('load', requestUpdate);
+  if (window.ResizeObserver) {
+    new ResizeObserver(requestUpdate).observe(document.body);
+  }
+  if (mascot.complete) requestUpdate();
+  else mascot.addEventListener('load', requestUpdate, { once: true });
 })();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"85ce2e61b40e4f4f8e8df2d94da25dd1","r":1,"spa":2}' crossorigin="anonymous"></script>
