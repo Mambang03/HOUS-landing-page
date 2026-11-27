@@ -38,7 +38,9 @@ a{color:var(--gold-2)}
 .btn-outline{background:transparent;border:1.5px solid var(--gold-2);color:var(--gold-2)}
 .btn-outline:hover{background:rgba(0,0,0,.06);box-shadow:none}
 .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.mascot{position:fixed;left:0;top:46%;height:clamp(260px,48vw,480px);width:auto;opacity:0;z-index:2;pointer-events:none;user-select:none;-webkit-user-drag:none;will-change:transform,opacity;transform:translate3d(-130%,-50%,0)}
+.mascot{position:fixed;left:0;top:46%;height:clamp(170px,32vw,360px);width:auto;max-width:34vw;opacity:0;z-index:2;pointer-events:none;user-select:none;-webkit-user-drag:none;will-change:transform,opacity;transform:translate3d(-130%,-50%,0)}
+@media(max-width:768px){.mascot{top:44%;height:clamp(112px,30vw,190px);max-width:30vw;opacity:0;}}
+@media(max-width:420px){.mascot{height:clamp(96px,27vw,132px);max-width:27vw;}}
 main{position:relative;z-index:1}
 .section-head{text-align:center;margin-bottom:42px}
 .section-head h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.1rem,5vw,3rem);letter-spacing:.1em}
