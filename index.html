@@ -1099,10 +1099,10 @@ fbq('track', 'PageView');
     if (reduce) { m.style.opacity = 0; return; }
     var y = window.pageYOffset, vh = window.innerHeight, W = window.innerWidth;
     var w = m.offsetWidth || 260;
-    var sv = document.getElementById('servis');
-    var end = (sv ? sv.getBoundingClientRect().top + y : vh * 2) + 120 - vh * 0.35;
-    if (end < vh) end = vh;
-    var p = clamp(y / end);
+    // Let the mascot complete its full journey over the entire page,
+    // rather than stopping when the Services section enters view.
+    var maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
+    var p = clamp(y / maxScroll);
     var peak = W < 680 ? 0.10 : 0.13;
     var o = peak * Math.min(1, (p + 0.04) * 10, (1 - p) * 8);
     var x = -w + (W + w) * p;
