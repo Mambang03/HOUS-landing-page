@@ -773,5 +773,8 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
 /* HERO IMAGE TAP-TO-REVEAL — final cascade override */
 #heroSlider .slide{cursor:pointer;filter:grayscale(100%);transition:opacity 1.2s ease,filter .35s ease}
 #heroSlider .slide.color-revealed,
-#heroSlider .slide.active.color-revealed{filter:grayscale(0%)!important}
+#heroSlider .slide.active.color-revealed{
+  -webkit-filter:grayscale(0%)!important;
+  filter:grayscale(0%)!important;
+}
 #heroSlider .slide:focus-visible{outline:2px solid #c7c1b5;outline-offset:-4px}
