@@ -1052,7 +1052,7 @@ fbq('track', 'PageView');
   var box = document.getElementById('heroSlider'); if (!box) return;
   var slides = box.querySelectorAll('.slide');
   var dotsWrap = document.getElementById('heroDots');
-  var INTERVAL = 3000, cur = 0, timer = null, hover = false;
+  var INTERVAL = 3000, cur = 0, timer = null, hover = false, colorWasRevealed = false;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dots = [];
   for (var i = 0; i < slides.length; i++) (function (n) {
@@ -1077,7 +1077,8 @@ fbq('track', 'PageView');
     slide.classList.add('color-revealed');
     slide.setAttribute('aria-pressed', 'true');
     slide.setAttribute('aria-label', 'Original color shown');
-    if (slide.classList.contains('active')) stop();
+    colorWasRevealed = true;
+    stop();
   }
   slides.forEach(function (slide) {
     slide.setAttribute('role', 'button');
@@ -1109,7 +1110,7 @@ fbq('track', 'PageView');
       var dx = e.changedTouches[0].clientX - sx;
       if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
     }
-    sx = null; start();
+    sx = null; if (!colorWasRevealed) start();
   }, { passive: true });
   go(0); start();
 })();
