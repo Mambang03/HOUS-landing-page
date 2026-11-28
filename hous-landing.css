@@ -777,4 +777,12 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
   -webkit-filter:grayscale(0%)!important;
   filter:grayscale(0%)!important;
 }
+/* HERO SLIDER: keep every image in its original full color */
+#heroSlider .slide,
+#heroSlider .slide.color-revealed,
+#heroSlider .slide.active.color-revealed{
+  -webkit-filter:none!important;
+  filter:none!important;
+  cursor:default;
+}
 #heroSlider .slide:focus-visible{outline:2px solid #c7c1b5;outline-offset:-4px}
