@@ -1071,24 +1071,29 @@ fbq('track', 'PageView');
       dots[i].classList.toggle('on', i === cur);
     }
   }
-  // Tap/click the hero image to reveal its original colors; tap again to return to monochrome.
+  // Reveal original colors immediately on touch or click (no second tap required).
+  function revealColor(slide) {
+    if (!slide) return;
+    slide.classList.add('color-revealed');
+    slide.setAttribute('aria-pressed', 'true');
+    slide.setAttribute('aria-label', 'Original color shown');
+    if (slide.classList.contains('active')) stop();
+  }
   slides.forEach(function (slide) {
     slide.setAttribute('role', 'button');
     slide.setAttribute('tabindex', '0');
-    slide.setAttribute('aria-label', 'Tap to reveal original color');
-    function toggleColor() {
-      var revealed = slide.classList.toggle('color-revealed');
-      slide.setAttribute('aria-pressed', revealed ? 'true' : 'false');
-      slide.setAttribute('aria-label', revealed
-        ? 'Original color shown; tap to return to monochrome'
-        : 'Tap to reveal original color');
-      // Hold the current slide while its original colors are being viewed.
-      if (revealed && slide.classList.contains('active')) stop();
-      else if (!revealed) start();
-    }
-    slide.addEventListener('click', toggleColor);
+    slide.setAttribute('aria-label', 'Touch to reveal original color');
+    slide.addEventListener('touchstart', function () {
+      revealColor(slide);
+    }, { passive: true });
+    slide.addEventListener('click', function () {
+      revealColor(slide);
+    });
     slide.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleColor(); }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        revealColor(slide);
+      }
     });
   });
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
