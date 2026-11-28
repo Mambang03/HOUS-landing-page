@@ -768,3 +768,10 @@ footer .foot-bottom a:hover{border-bottom-color:var(--accent)}
  .experience-image:nth-of-type(5){grid-column:1;grid-row:6}
 }
 @media(prefers-reduced-motion:reduce){.experience-image img{transition:none}}
+
+
+/* HERO IMAGE TAP-TO-REVEAL — final cascade override */
+#heroSlider .slide{cursor:pointer;filter:grayscale(100%);transition:opacity 1.2s ease,filter .35s ease}
+#heroSlider .slide.color-revealed,
+#heroSlider .slide.active.color-revealed{filter:grayscale(0%)!important}
+#heroSlider .slide:focus-visible{outline:2px solid #c7c1b5;outline-offset:-4px}
