@@ -1065,9 +1065,29 @@ fbq('track', 'PageView');
     cur = (n + slides.length) % slides.length;
     for (var i = 0; i < slides.length; i++) {
       slides[i].classList.toggle('active', i === cur);
+      slides[i].classList.remove('color-revealed');
+      slides[i].setAttribute('aria-label', slides[i].classList.contains('color-revealed')
+        ? 'Image in original color' : 'Tap to reveal original color');
       dots[i].classList.toggle('on', i === cur);
     }
   }
+  // Tap/click the hero image to reveal its original colors; tap again to return to monochrome.
+  slides.forEach(function (slide) {
+    slide.setAttribute('role', 'button');
+    slide.setAttribute('tabindex', '0');
+    slide.setAttribute('aria-label', 'Tap to reveal original color');
+    function toggleColor() {
+      slide.classList.toggle('color-revealed');
+      slide.setAttribute('aria-pressed', slide.classList.contains('color-revealed') ? 'true' : 'false');
+      slide.setAttribute('aria-label', slide.classList.contains('color-revealed')
+        ? 'Original color shown; tap to return to monochrome'
+        : 'Tap to reveal original color');
+    }
+    slide.addEventListener('click', toggleColor);
+    slide.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleColor(); }
+    });
+  });
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
   function start() { if (reduce || hover || document.hidden || timer) return; timer = setInterval(function () { go(cur + 1); }, INTERVAL); }
   function restart() { stop(); start(); }
