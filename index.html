@@ -1077,11 +1077,14 @@ fbq('track', 'PageView');
     slide.setAttribute('tabindex', '0');
     slide.setAttribute('aria-label', 'Tap to reveal original color');
     function toggleColor() {
-      slide.classList.toggle('color-revealed');
-      slide.setAttribute('aria-pressed', slide.classList.contains('color-revealed') ? 'true' : 'false');
-      slide.setAttribute('aria-label', slide.classList.contains('color-revealed')
+      var revealed = slide.classList.toggle('color-revealed');
+      slide.setAttribute('aria-pressed', revealed ? 'true' : 'false');
+      slide.setAttribute('aria-label', revealed
         ? 'Original color shown; tap to return to monochrome'
         : 'Tap to reveal original color');
+      // Hold the current slide while its original colors are being viewed.
+      if (revealed && slide.classList.contains('active')) stop();
+      else if (!revealed) start();
     }
     slide.addEventListener('click', toggleColor);
     slide.addEventListener('keydown', function (e) {
