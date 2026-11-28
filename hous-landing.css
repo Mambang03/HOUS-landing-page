@@ -155,7 +155,7 @@ footer{border-top:1px solid var(--line-2);padding:28px 0;background:var(--bg-2)}
   .nav-links {
     display: flex; position: static; flex: 0 0 100%; flex-direction: column;
     align-items: stretch; justify-content: flex-start; width: 100%; max-width: 100%;
-    gap: 0; max-height: 0; margin-top: 0; padding: 0 12px; overflow: hidden;
+    gap: 0; max-height: 0; margin-top: 0; padding: 0 12px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
     opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none;
     background: rgba(255,255,255,.98); border: 1px solid transparent; border-radius: 0 0 8px 8px;
     box-shadow: 0 12px 20px rgba(0,0,0,0);
@@ -164,7 +164,7 @@ footer{border-top:1px solid var(--line-2);padding:28px 0;background:var(--bg-2)}
       box-shadow .32s ease, visibility 0s linear .36s;
   }
   .nav-links.is-open {
-    max-height: 240px; margin-top: 8px; padding: 6px 12px 10px;
+    max-height: min(70vh, 460px); margin-top: 8px; padding: 6px 12px 10px;
     opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
     border-color: var(--line-2); box-shadow: 0 12px 20px rgba(0,0,0,.08);
     transition: max-height .36s ease, opacity .22s ease, transform .32s ease,
