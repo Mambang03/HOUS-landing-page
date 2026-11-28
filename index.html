@@ -1052,51 +1052,7 @@ fbq('track', 'PageView');
   var box = document.getElementById('heroSlider'); if (!box) return;
   var slides = box.querySelectorAll('.slide');
   var dotsWrap = document.getElementById('heroDots');
-  var INTERVAL = 3000, cur = 0, timer = null, hover = false, colorWasRevealed = false;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var dots = [];
-  for (var i = 0; i < slides.length; i++) (function (n) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.setAttribute('aria-label', 'Gambar ' + (n + 1));
-    b.addEventListener('click', function () { go(n); restart(); });
-    dotsWrap.appendChild(b); dots.push(b);
-  })(i);
-  function go(n) {
-    cur = (n + slides.length) % slides.length;
-    for (var i = 0; i < slides.length; i++) {
-      slides[i].classList.toggle('active', i === cur);
-      slides[i].classList.remove('color-revealed');
-      slides[i].setAttribute('aria-label', slides[i].classList.contains('color-revealed')
-        ? 'Image in original color' : 'Tap to reveal original color');
-      dots[i].classList.toggle('on', i === cur);
-    }
-  }
-  // Reveal original colors immediately on touch or click (no second tap required).
-  function revealColor(slide) {
-    if (!slide) return;
-    slide.classList.add('color-revealed');
-    slide.setAttribute('aria-pressed', 'true');
-    slide.setAttribute('aria-label', 'Original color shown');
-    colorWasRevealed = true;
-    stop();
-  }
-  slides.forEach(function (slide) {
-    slide.setAttribute('role', 'button');
-    slide.setAttribute('tabindex', '0');
-    slide.setAttribute('aria-label', 'Touch to reveal original color');
-    slide.addEventListener('touchstart', function () {
-      revealColor(slide);
-    }, { passive: true });
-    slide.addEventListener('click', function () {
-      revealColor(slide);
-    });
-    slide.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        revealColor(slide);
-      }
-    });
-  });
+  var INTERVAL = 3000, cur = 0, timer = null, hover = false;
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
   function start() { if (reduce || hover || document.hidden || timer) return; timer = setInterval(function () { go(cur + 1); }, INTERVAL); }
   function restart() { stop(); start(); }
@@ -1110,7 +1066,7 @@ fbq('track', 'PageView');
       var dx = e.changedTouches[0].clientX - sx;
       if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
     }
-    sx = null; if (!colorWasRevealed) start();
+    sx = null; start();
   }, { passive: true });
   go(0); start();
 })();
